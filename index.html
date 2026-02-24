@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Dia de Açaí - Final Corrigido</title>
+  <title>Dia de Açaí - Oficial</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -39,28 +39,22 @@
     </header>
 
     <main class="p-4 space-y-8 pb-32">
-        
         <section id="destaques" class="scroll-mt-28">
-            <div class="flex flex-col mb-4">
-                <h3 class="font-extrabold text-gray-900 text-lg">Os Mais Pedidos 🔥</h3>
-                <p class="text-xs text-gray-400">Troque ingredientes à vontade, cobramos apenas os extras.</p>
-            </div>
-            
+            <h3 class="font-extrabold text-gray-900 text-lg mb-4">Os Mais Pedidos 🔥</h3>
             <div class="space-y-3">
-                <div onclick="abrirModal('Copo Kinder 400ml', 28.90, 2, 3, ['Morango','Banana'], ['Nutella','Leite Pó','Granola'])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer active:bg-gray-50">
+                <div onclick="abrirModal('Copo Kinder 400ml', 28.90, 2, 3, ['Morango','Banana'], ['Nutella','Leite em Pó','Granola'])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer active:bg-gray-50">
                     <div class="flex justify-between items-start">
                         <span class="font-bold text-gray-800">Copo Kinder 400ml</span>
                         <span class="font-extrabold text-[#ea1d2c]">R$ 28,90</span>
                     </div>
-                    <span class="text-[11px] text-purple-600 font-bold mt-1 uppercase tracking-tighter">Já vai com: Morango, Banana, Nutella, Leite Pó e Granola.</span>
+                    <span class="text-[11px] text-purple-600 font-bold mt-1 uppercase tracking-tighter">Incluso: Morango, Banana, Nutella, Leite em Pó e Granola.</span>
                 </div>
-
-                <div onclick="abrirModal('Supremo 700ml', 31.90, 2, 4, ['Banana','Morango'], ['Paçoca','Bis','Leite Pó','M&Ms'])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer active:bg-gray-50">
+                <div onclick="abrirModal('Supremo 700ml', 31.90, 2, 4, ['Banana','Morango'], ['Paçoca','Bis','Leite em Pó','M&Ms'])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer active:bg-gray-50">
                     <div class="flex justify-between items-start">
                         <span class="font-bold text-gray-800">Supremo 700ml</span>
                         <span class="font-extrabold text-[#ea1d2c]">R$ 31,90</span>
                     </div>
-                    <span class="text-[11px] text-purple-600 font-bold mt-1 uppercase tracking-tighter">Já vai com: Banana, Morango, Paçoca, Bis, Leite Pó e M&Ms.</span>
+                    <span class="text-[11px] text-purple-600 font-bold mt-1 uppercase tracking-tighter">Incluso: Banana, Morango, Paçoca, Bis, Leite em Pó e M&Ms.</span>
                 </div>
             </div>
         </section>
@@ -69,18 +63,11 @@
             <h3 class="font-extrabold text-gray-900 text-lg mb-4">🥣 Monte do seu jeito</h3>
             <div class="space-y-3">
                 <div onclick="abrirModal('Açaí 330ml', 13.50, 2, 1, [], [])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer">
-                    <div class="flex justify-between">
-                        <span class="font-bold">Açaí 330ml</span>
-                        <span class="font-extrabold text-[#ea1d2c]">R$ 13,50</span>
-                    </div>
+                    <div class="flex justify-between"><span class="font-bold">Açaí 330ml</span><span class="font-extrabold text-[#ea1d2c]">R$ 13,50</span></div>
                     <span class="text-[11px] text-gray-400 mt-1 uppercase">Incluso 2 Frutas e 1 Complemento.</span>
                 </div>
-
                 <div onclick="abrirModal('Açaí 500ml', 18.90, 3, 2, [], [])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer">
-                    <div class="flex justify-between">
-                        <span class="font-bold">Açaí 500ml</span>
-                        <span class="font-extrabold text-[#ea1d2c]">R$ 18,90</span>
-                    </div>
+                    <div class="flex justify-between"><span class="font-bold">Açaí 500ml</span><span class="font-extrabold text-[#ea1d2c]">R$ 18,90</span></div>
                     <span class="text-[11px] text-gray-400 mt-1 uppercase">Incluso 3 Frutas e 2 Complementos.</span>
                 </div>
             </div>
@@ -89,10 +76,7 @@
         <section id="bebidas" class="scroll-mt-28">
             <h3 class="font-extrabold text-gray-900 text-lg mb-4">🥤 Bebidas</h3>
             <div class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex justify-between items-center">
-                <div>
-                    <span class="font-bold block">Água Mineral 500ml</span>
-                    <span class="font-extrabold text-[#ea1d2c]">R$ 3,50</span>
-                </div>
+                <div><span class="font-bold block">Água Mineral 500ml</span><span class="font-extrabold text-[#ea1d2c]">R$ 3,50</span></div>
                 <button onclick="addAgua()" class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-md active:scale-90 transition">+ Adicionar</button>
             </div>
         </section>
@@ -108,32 +92,14 @@
     <div id="modal-item" class="fixed inset-0 z-[60] bg-black/50 hidden">
         <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[32px] max-h-[90vh] overflow-y-auto p-6">
             <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h2 id="m-nome" class="text-xl font-extrabold text-purple-900 leading-tight"></h2>
-                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Troque os itens abaixo</p>
-                </div>
+                <div><h2 id="m-nome" class="text-xl font-extrabold text-purple-900"></h2><p class="text-[10px] text-gray-400 font-bold uppercase">Personalize seu açaí</p></div>
                 <button onclick="fecharModal()" class="text-gray-300 text-2xl">✕</button>
             </div>
-
             <div class="space-y-6 mb-32">
-                <div class="bg-yellow-50 p-3 rounded-xl border border-yellow-100 text-[11px] font-bold text-yellow-700">
-                    💡 DICA: Você pode desmarcar o que vem no copo e escolher outro! Extras: Fruta +R$2,50 | Comp. +R$3,50
-                </div>
-
-                <div>
-                    <h4 class="font-bold text-sm mb-4">Frutas (<span id="f-limit-text">0/0</span>)</h4>
-                    <div id="list-f" class="grid grid-cols-1 gap-2"></div>
-                </div>
-                <div>
-                    <h4 class="font-bold text-sm mb-4">Complementos (<span id="c-limit-text">0/0</span>)</h4>
-                    <div id="list-c" class="grid grid-cols-1 gap-2"></div>
-                </div>
-                <div>
-                    <h4 class="font-bold text-sm mb-2">Observação</h4>
-                    <textarea id="m-obs" class="w-full bg-gray-100 rounded-xl p-4 text-sm outline-none border-none" placeholder="Ex: Caprichar na Nutella..."></textarea>
-                </div>
+                <div><h4 class="font-bold text-sm mb-4">Frutas (<span id="f-limit-text">0/0</span>)</h4><div id="list-f" class="grid grid-cols-1 gap-2"></div></div>
+                <div><h4 class="font-bold text-sm mb-4">Complementos (<span id="c-limit-text">0/0</span>)</h4><div id="list-c" class="grid grid-cols-1 gap-2"></div></div>
+                <div><h4 class="font-bold text-sm mb-2">Observação</h4><textarea id="m-obs" class="w-full bg-gray-100 rounded-xl p-4 text-sm outline-none border-none" placeholder="Algo mais?"></textarea></div>
             </div>
-
             <div class="fixed bottom-0 left-0 right-0 p-6 bg-white border-t flex gap-4">
                 <div class="flex items-center bg-gray-100 rounded-xl px-2">
                     <button onclick="mudarQtd(-1)" class="w-10 h-10 text-xl font-bold">−</button>
@@ -150,51 +116,44 @@
     <div id="checkout" class="fixed inset-0 z-[70] bg-white hidden overflow-y-auto">
         <div class="p-4 border-b flex items-center gap-4 bg-white sticky top-0">
             <button onclick="verSacola()" class="text-[#ea1d2c] font-bold text-2xl">❮</button>
-            <h2 class="font-extrabold">Revisão do Pedido</h2>
+            <h2 class="font-extrabold">Finalizar Pedido</h2>
         </div>
-
         <div class="p-6 pb-20">
             <div id="lista-checkout" class="space-y-4 mb-8"></div>
-
+            
             <div class="mb-8">
                 <h4 class="font-bold text-sm mb-3">Endereço de Entrega</h4>
-                <input id="addr" type="text" placeholder="Rua, Número e Bairro" class="w-full p-4 bg-gray-50 rounded-xl outline-none border-2 border-transparent focus:border-red-500 font-bold">
+                <input id="addr" type="text" placeholder="Rua, Número e Bairro" class="w-full p-4 bg-gray-50 rounded-xl font-bold outline-none border-2 border-transparent focus:border-red-500">
             </div>
 
             <div class="mb-8">
-                <h4 class="font-bold text-sm mb-3">Forma de Pagamento</h4>
-                <div class="space-y-2">
-                    <div onclick="setPagamento('Pix')" class="payment-card p-4 rounded-xl flex items-center justify-between" id="pay-pix">
-                        <span class="font-bold">Pix</span>
-                    </div>
-                    <div onclick="setPagamento('Cartão')" class="payment-card p-4 rounded-xl" id="pay-card">
-                        <span class="font-bold">Cartão (Entregador leva a máquina)</span>
-                    </div>
-                    <div onclick="setPagamento('Dinheiro')" class="payment-card p-4 rounded-xl" id="pay-cash">
-                        <span class="font-bold">Dinheiro</span>
-                    </div>
-                </div>
-
-                <div id="campo-troco" class="hidden mt-4 p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
-                    <h4 class="font-bold text-sm mb-2">Vai pagar com quanto?</h4>
-                    <input id="pag-valor" type="number" oninput="calcTroco()" placeholder="Ex: 50.00" class="w-full p-3 rounded-lg border-none font-bold text-lg">
-                    <p id="resultado-troco" class="mt-2 text-sm font-bold text-green-600"></p>
+                <h4 class="font-bold text-sm mb-3">Pagamento</h4>
+                <div class="grid grid-cols-3 gap-2">
+                    <div onclick="setPagamento('Pix')" class="payment-card p-3 rounded-xl font-bold text-center text-sm" id="pay-pix">Pix</div>
+                    <div onclick="setPagamento('Cartão')" class="payment-card p-3 rounded-xl font-bold text-center text-sm" id="pay-card">Cartão</div>
+                    <div onclick="setPagamento('Dinheiro')" class="payment-card p-3 rounded-xl font-bold text-center text-sm" id="pay-cash">Dinheiro</div>
                 </div>
 
                 <div id="campo-pix" class="hidden mt-4 p-4 bg-purple-50 rounded-xl border border-purple-200 text-center">
-                    <p class="text-[10px] font-black uppercase text-purple-900 italic">Chave Pix Celular:</p>
-                    <p class="font-black text-xl text-purple-700">44988569863</p>
-                    <p class="text-[10px] text-purple-400 mt-1 font-bold">DIA DE AÇAÍ EXPRESS</p>
+                    <p class="text-[10px] font-black uppercase text-purple-900">Chave Pix (Telefone):</p>
+                    <p class="font-black text-lg text-purple-700">44988569863</p>
+                    <p class="text-[9px] text-purple-400 mt-1">Realize o pagamento e envie o comprovante</p>
+                </div>
+
+                <div id="campo-troco" class="hidden mt-4 p-4 bg-gray-50 rounded-xl">
+                    <label class="text-xs font-bold text-gray-400 block mb-1">Troco para quanto?</label>
+                    <input id="pag-valor" type="number" oninput="calcTroco()" placeholder="Ex: 50" class="w-full p-3 rounded-lg font-bold outline-none">
+                    <p id="resultado-troco" class="mt-2 text-sm font-bold text-green-600"></p>
                 </div>
             </div>
 
-            <div class="bg-gray-900 p-6 rounded-[32px] space-y-3 font-bold text-white shadow-xl">
-                <div class="flex justify-between text-gray-400 text-sm"><span>Produtos</span><span id="sub-final">R$ 0,00</span></div>
-                <div class="flex justify-between text-green-400 text-sm"><span>Entrega</span><span>R$ 7,50</span></div>
-                <div class="flex justify-between text-2xl font-black pt-4 border-t border-gray-800"><span>Total</span><span id="total-final">R$ 0,00</span></div>
+            <div class="bg-gray-900 p-6 rounded-[32px] text-white font-bold space-y-2">
+                <div class="flex justify-between text-sm text-gray-400"><span>Subtotal</span><span id="sub-final">R$ 0,00</span></div>
+                <div class="flex justify-between text-sm text-green-400"><span>Entrega</span><span>R$ 7,50</span></div>
+                <div class="flex justify-between text-2xl pt-2 border-t border-gray-800"><span>Total</span><span id="total-final">R$ 0,00</span></div>
             </div>
 
-            <button onclick="enviarPedido()" class="w-full bg-[#ea1d2c] text-white py-5 rounded-2xl font-black text-lg mt-10 shadow-lg shadow-red-200 uppercase tracking-widest active:scale-95 transition">Pedir agora no Zap</button>
+            <button onclick="enviarPedido()" class="w-full bg-[#ea1d2c] text-white py-5 rounded-2xl font-black text-lg mt-8 uppercase shadow-lg">Enviar no WhatsApp</button>
         </div>
     </div>
 
@@ -203,13 +162,13 @@
   <script>
     let sacola = []; let cur = null; let nome = ''; let pag = ''; let totalGeral = 0;
     const db = { 
-        f: ['Morango','Banana','Uva','Manga','Kiwi'], 
-        c: ['Nutella','Leite Pó','Granola','Paçoca','Oreo','M&Ms','Bis','Leite Condensado'] 
+        f: ['Morango', 'Banana', 'Uva', 'Manga', 'Kiwi'], 
+        c: ['Nutella', 'Leite em Pó', 'Granola', 'Leite Condensado', 'Paçoca', 'Oreo', 'M&Ms', 'Bis', 'Coco Ralado', 'Chocoball', 'Kit Kat', 'Mel', 'Cereais'] 
     };
 
     function iniciarApp() {
         nome = document.getElementById('client-name').value;
-        if(!nome) return alert("Por favor, insira seu nome!");
+        if(!nome) return alert("Digite seu nome!");
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('main-app').classList.remove('hidden');
     }
@@ -217,7 +176,7 @@
     function scrollToSection(id) {
         document.getElementById(id).scrollIntoView();
         document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('tab-active'));
-        event.target.classList.add('tab-active');
+        if(event) event.target.classList.add('tab-active');
     }
 
     function abrirModal(n, p, fL, cL, fS=[], cS=[]) {
@@ -267,10 +226,7 @@
         updateBag(); fecharModal();
     }
 
-    function addAgua() {
-        sacola.push({nome: 'Água Mineral 500ml', total: 3.50, q: 1, f: [], c: [], obs: ''});
-        updateBag();
-    }
+    function addAgua() { sacola.push({nome: 'Água Mineral 500ml', total: 3.50, q: 1, f: [], c: [], obs: ''}); updateBag(); }
 
     function updateBag() {
         const sub = sacola.reduce((acc, i) => acc + i.total, 0);
@@ -285,63 +241,36 @@
         const sub = sacola.reduce((acc, i) => acc + i.total, 0);
         document.getElementById('lista-checkout').innerHTML = sacola.map((i, idx) => `
             <div class="flex justify-between items-center border-b pb-4">
-                <div>
-                    <h5 class="font-bold text-sm">${i.q}x ${i.nome}</h5>
-                    <p class="text-[10px] text-gray-400 font-bold">${[...i.f, ...i.c].join(', ')}</p>
-                    <p class="text-sm font-black text-[#ea1d2c] mt-1">R$ ${i.total.toFixed(2).replace('.',',')}</p>
-                </div>
+                <div><h5 class="font-bold text-sm">${i.q}x ${i.nome}</h5><p class="text-[10px] text-gray-400 font-bold">${[...i.f, ...i.c].join(', ')}</p></div>
                 <button onclick="remover(${idx})" class="text-gray-300 font-black text-xs border p-1 rounded">X</button>
             </div>`).join('');
         document.getElementById('sub-final').innerText = `R$ ${sub.toFixed(2).replace('.',',')}`;
         document.getElementById('total-final').innerText = `R$ ${totalGeral.toFixed(2).replace('.',',')}`;
-        calcTroco();
     }
 
-    function remover(idx) { 
-        sacola.splice(idx, 1); 
-        if(sacola.length === 0) document.getElementById('checkout').classList.add('hidden');
-        verSacola(); updateBag(); 
-    }
+    function remover(idx) { sacola.splice(idx, 1); if(sacola.length === 0) document.getElementById('checkout').classList.add('hidden'); verSacola(); updateBag(); }
 
     function setPagamento(t) {
         pag = t;
-        document.getElementById('pay-pix').className = "payment-card p-4 rounded-xl " + (t==='Pix'?'selected':'');
-        document.getElementById('pay-card').className = "payment-card p-4 rounded-xl " + (t==='Cartão'?'selected':'');
-        document.getElementById('pay-cash').className = "payment-card p-4 rounded-xl " + (t==='Dinheiro'?'selected':'');
+        document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
+        document.getElementById('pay-' + (t==='Pix'?'pix':t==='Cartão'?'card':'cash')).classList.add('selected');
         document.getElementById('campo-troco').classList.toggle('hidden', t !== 'Dinheiro');
         document.getElementById('campo-pix').classList.toggle('hidden', t !== 'Pix');
-        calcTroco();
+        if(t !== 'Dinheiro') { document.getElementById('pag-valor').value = ''; document.getElementById('resultado-troco').innerText = ''; }
     }
 
     function calcTroco() {
         const v = parseFloat(document.getElementById('pag-valor').value);
-        const res = document.getElementById('resultado-troco');
-        if(v > totalGeral) {
-            res.innerText = `Seu troco será: R$ ${(v - totalGeral).toFixed(2).replace('.',',')}`;
-        } else {
-            res.innerText = "";
-        }
+        if(v >= totalGeral) document.getElementById('resultado-troco').innerText = `Troco: R$ ${(v - totalGeral).toFixed(2).replace('.',',')}`;
+        else document.getElementById('resultado-troco').innerText = "";
     }
 
     function enviarPedido() {
         const addr = document.getElementById('addr').value;
-        const vPag = document.getElementById('pag-valor').value;
-        if(!addr || !pag) return alert("Preencha o Endereço e Pagamento!");
-        
-        let msg = `*PEDIDO DIA DE AÇAÍ*\n\n👤 *CLIENTE:* ${nome}\n📍 *ENDEREÇO:* ${addr}\n💳 *PAGAMENTO:* ${pag}\n`;
-        
-        if(pag === 'Dinheiro' && vPag) {
-            const troco = (parseFloat(vPag) - totalGeral);
-            msg += `💵 *PAGO COM:* R$ ${vPag}\n🪙 *TROCO:* R$ ${troco > 0 ? troco.toFixed(2) : '0,00'}\n`;
-        }
-        
-        msg += `\n*ITENS:*\n`;
-        sacola.forEach(i => {
-            msg += `• ${i.q}x ${i.nome} (R$ ${i.total.toFixed(2)})\n`;
-            if([...i.f, ...i.c].length > 0) msg += `  _Ingredientes: ${[...i.f, ...i.c].join(', ')}_\n`;
-            if(i.obs) msg += `  _Obs: ${i.obs}_\n`;
-        });
-        
+        const vTroco = document.getElementById('pag-valor').value;
+        if(!addr || !pag) return alert("Preencha endereço e pagamento!");
+        let msg = `*PEDIDO - DIA DE AÇAÍ*\n\n👤 *CLIENTE:* ${nome}\n📍 *ENDEREÇO:* ${addr}\n💳 *PAGAMENTO:* ${pag}${vTroco ? ' (Troco para R$'+vTroco+')' : ''}\n\n*ITENS:*\n`;
+        sacola.forEach(i => msg += `• ${i.q}x ${i.nome} (${[...i.f, ...i.c].join(', ')})\n`);
         msg += `\n🛵 *ENTREGA:* R$ 7,50\n*TOTAL: R$ ${totalGeral.toFixed(2)}*`;
         window.open(`https://wa.me/5544988569863?text=${encodeURIComponent(msg)}`);
     }
