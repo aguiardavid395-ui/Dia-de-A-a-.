@@ -1,267 +1,349 @@
 <!doctype html>
-<html lang="pt-BR" class="h-full">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dia de Açaí Express</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Dia de Açaí - Final Corrigido</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * { font-family: 'Nunito', sans-serif; }
-    .gradient-acai { background: linear-gradient(135deg, #4a1a6b 0%, #7b2d8e 50%, #9c3fa0 100%); }
-    .btn-acai { background-color: #9c3fa0; color: white; border-radius: 12px; font-weight: 800; transition: all 0.2s; cursor: pointer; }
-    .btn-acai:active { transform: scale(0.95); }
-    .chip { border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 12px 6px; font-size: 11px; font-weight: 700; text-align: center; cursor: pointer; background: white; color: #4b5563; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; transition: 0.2s; }
-    .chip.selected { border-color: #9c3fa0; background-color: #fdf4ff; color: #9c3fa0; border-width: 2px; }
-    .ai-bubble { background: #f3e8ff; border: 1px solid #d8b4fe; border-radius: 15px 15px 15px 0px; padding: 10px; font-size: 11px; color: #6b21a8; font-weight: 700; }
-    .payment-card { border: 2px solid #f3f4f6; border-radius: 16px; padding: 15px; text-align: center; cursor: pointer; font-weight: 800; font-size: 12px; }
-    .payment-card.selected { border-color: #9c3fa0; background-color: #fdf4ff; color: #9c3fa0; }
-    .slide-up { animation: slideUp 0.3s ease-out; }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f7f7f7; scroll-behavior: smooth; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .tab-active { color: #ea1d2c; border-bottom: 2px solid #ea1d2c; }
+    .payment-card { border: 2px solid #eee; transition: 0.2s; cursor: pointer; }
+    .payment-card.selected { border-color: #ea1d2c; background-color: #fff5f5; }
   </style>
 </head>
-<body class="h-full bg-gray-50">
-  <div id="app" class="max-w-lg mx-auto h-full flex flex-col bg-white shadow-2xl overflow-hidden relative">
+<body class="antialiased text-gray-800">
+
+  <div id="login-screen" class="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center p-6 text-center">
+      <div class="w-20 h-20 bg-purple-900 rounded-2xl flex items-center justify-center text-white text-3xl font-black mb-6">DA</div>
+      <h1 class="text-2xl font-bold italic text-purple-900">Dia de Açaí</h1>
+      <p class="text-gray-400 text-sm mb-8 font-medium">O melhor de Sarandi! <br>Insira seu nome para o pedido:</p>
+      <input type="text" id="client-name" class="w-full max-w-xs p-4 bg-gray-100 rounded-xl mb-4 border-none outline-none font-bold text-center" placeholder="Seu Nome">
+      <button onclick="iniciarApp()" class="w-full max-w-xs bg-[#ea1d2c] text-white py-4 rounded-xl font-bold shadow-lg active:scale-95 transition">Ver Cardápio Completo</button>
+  </div>
+
+  <div id="main-app" class="hidden max-w-md mx-auto">
     
-    <header class="gradient-acai p-6 text-white shadow-lg flex justify-between items-center">
-      <div>
-        <h1 class="font-black italic text-xl uppercase tracking-tighter text-yellow-300">🍧 Dia de Açaí Express</h1>
-      </div>
-      <button onclick="toggleCart()" class="bg-white/20 p-3 rounded-2xl relative">
-        🛒 <span id="cart-count" class="absolute -top-1 -right-1 bg-yellow-400 text-purple-900 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
-      </button>
+    <header class="sticky top-0 bg-white/95 backdrop-blur-md z-40 border-b">
+        <div class="p-4 flex justify-between items-center">
+            <h2 class="font-extrabold text-lg italic text-purple-900">Dia de Açaí</h2>
+            <span class="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full uppercase">Aberto Agora</span>
+        </div>
+        <div class="flex gap-6 px-4 overflow-x-auto no-scrollbar font-bold text-sm text-gray-400">
+            <button onclick="scrollToSection('destaques')" class="category-btn tab-active pb-2 whitespace-nowrap">Favoritos</button>
+            <button onclick="scrollToSection('monte')" class="category-btn pb-2 whitespace-nowrap">Montar Copo</button>
+            <button onclick="scrollToSection('bebidas')" class="category-btn pb-2 whitespace-nowrap">Bebidas</button>
+        </div>
     </header>
 
-    <main class="flex-1 overflow-y-auto p-4 space-y-8 pb-24">
-      
-      <div class="flex items-start gap-3 mb-4 slide-up">
-        <div class="bg-purple-600 p-2 rounded-full text-lg">🤖</div>
-        <div class="ai-bubble shadow-sm">
-          <p id="ai-text">Olá! Escolha seu açaí. Extras: Fruta R$ 2,50 | Complemento R$ 3,50. 😋</p>
-        </div>
-      </div>
-
-      <section>
-        <h2 class="text-purple-900 font-black text-lg mb-4 italic underline">🥣 Monte Seu Açaí</h2>
-        <div class="grid gap-3">
-          <div class="bg-white p-4 rounded-[24px] border border-gray-100 flex justify-between items-center shadow-sm">
-            <div><p class="font-bold text-gray-800">Açaí 330ML</p><p class="text-[10px] text-purple-500 font-bold uppercase">2 Frutas + 1 Comp. Grátis</p><p class="text-purple-600 font-black text-sm">R$ 13,50</p></div>
-            <button onclick="openCust('Açaí 330ML', 13.50, 2, 1)" class="btn-acai px-5 py-2 text-xs">Montar</button>
-          </div>
-          <div class="bg-white p-4 rounded-[24px] border border-gray-100 flex justify-between items-center shadow-sm">
-            <div><p class="font-bold text-gray-800">Açaí 400ML</p><p class="text-[10px] text-purple-500 font-bold uppercase">3 Frutas + 3 Comp. Grátis</p><p class="text-purple-600 font-black text-sm">R$ 16,50</p></div>
-            <button onclick="openCust('Açaí 400ML', 16.50, 3, 3)" class="btn-acai px-5 py-2 text-xs">Montar</button>
-          </div>
-          <div class="bg-white p-4 rounded-[24px] border border-gray-100 flex justify-between items-center shadow-sm">
-            <div><p class="font-bold text-gray-800">Açaí 500ML</p><p class="text-[10px] text-purple-500 font-bold uppercase">3 Frutas + 3 Comp. Grátis</p><p class="text-purple-600 font-black text-sm">R$ 19,50</p></div>
-            <button onclick="openCust('Açaí 500ML', 19.50, 3, 3)" class="btn-acai px-5 py-2 text-xs">Montar</button>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="text-purple-900 font-black text-lg mb-4 italic underline">✨ Copos Prontos (Editáveis)</h2>
-        <div class="grid gap-4">
-          <div class="bg-white p-5 rounded-[24px] border border-gray-100 shadow-sm">
-            <h3 class="font-black text-gray-800 uppercase italic text-sm">🍫 Copo Kinder 400ML</h3>
-            <p class="text-[10px] text-gray-400 font-bold mb-3 italic">Morango, Leite em pó, Nutella, Oreo</p>
-            <div class="flex justify-between items-center text-sm font-black">
-              <span class="text-purple-600">R$ 24,90</span>
-              <button onclick="openCust('Copo Kinder 400ML', 24.90, 3, 3, ['Morango'], ['Leite em pó', 'Nutella', 'Oreo'])" class="btn-acai px-6 py-2">Personalizar</button>
+    <main class="p-4 space-y-8 pb-32">
+        
+        <section id="destaques" class="scroll-mt-28">
+            <div class="flex flex-col mb-4">
+                <h3 class="font-extrabold text-gray-900 text-lg">Os Mais Pedidos 🔥</h3>
+                <p class="text-xs text-gray-400">Troque ingredientes à vontade, cobramos apenas os extras.</p>
             </div>
-          </div>
-          <div class="bg-yellow-50 p-5 rounded-[24px] border border-yellow-200 shadow-sm">
-            <h3 class="font-black text-gray-800 uppercase italic text-sm">🏆 Copão Supremo 500ML</h3>
-            <p class="text-[10px] text-gray-400 font-bold mb-3 italic">Morango, Uva, Leite em pó, Kit Kat, Fini</p>
-            <div class="flex justify-between items-center text-sm font-black">
-              <span class="text-purple-600">R$ 29,90</span>
-              <button onclick="openCust('Copão Supremo 500ML', 29.90, 3, 3, ['Morango', 'Uva'], ['Leite em pó', 'Kit Kat', 'Fini'])" class="btn-acai px-6 py-2">Personalizar</button>
-            </div>
-          </div>
-        </div>
-      </section>
+            
+            <div class="space-y-3">
+                <div onclick="abrirModal('Copo Kinder 400ml', 28.90, 2, 3, ['Morango','Banana'], ['Nutella','Leite Pó','Granola'])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer active:bg-gray-50">
+                    <div class="flex justify-between items-start">
+                        <span class="font-bold text-gray-800">Copo Kinder 400ml</span>
+                        <span class="font-extrabold text-[#ea1d2c]">R$ 28,90</span>
+                    </div>
+                    <span class="text-[11px] text-purple-600 font-bold mt-1 uppercase tracking-tighter">Já vai com: Morango, Banana, Nutella, Leite Pó e Granola.</span>
+                </div>
 
-      <section>
-        <h2 class="text-purple-900 font-black text-lg mb-4 italic underline">🥤 Bebidas</h2>
-        <div class="bg-white p-4 rounded-[24px] border border-gray-100 flex justify-between items-center shadow-sm">
-          <div><p class="font-bold text-gray-800">Água Mineral 500ml</p><p class="text-purple-600 font-black text-sm">R$ 3,50</p></div>
-          <div class="flex items-center gap-3 bg-gray-100 p-1 rounded-2xl">
-              <button onclick="updateDrinkQuantity(-1)" class="bg-white w-8 h-8 rounded-xl font-black text-purple-600 shadow-sm">-</button>
-              <span id="drink-qty" class="font-black text-purple-900 min-w-[20px] text-center">0</span>
-              <button onclick="updateDrinkQuantity(1)" class="bg-purple-600 w-8 h-8 rounded-xl font-black text-white shadow-sm">+</button>
-          </div>
-        </div>
-      </section>
+                <div onclick="abrirModal('Supremo 700ml', 31.90, 2, 4, ['Banana','Morango'], ['Paçoca','Bis','Leite Pó','M&Ms'])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer active:bg-gray-50">
+                    <div class="flex justify-between items-start">
+                        <span class="font-bold text-gray-800">Supremo 700ml</span>
+                        <span class="font-extrabold text-[#ea1d2c]">R$ 31,90</span>
+                    </div>
+                    <span class="text-[11px] text-purple-600 font-bold mt-1 uppercase tracking-tighter">Já vai com: Banana, Morango, Paçoca, Bis, Leite Pó e M&Ms.</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="monte" class="scroll-mt-28">
+            <h3 class="font-extrabold text-gray-900 text-lg mb-4">🥣 Monte do seu jeito</h3>
+            <div class="space-y-3">
+                <div onclick="abrirModal('Açaí 330ml', 13.50, 2, 1, [], [])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer">
+                    <div class="flex justify-between">
+                        <span class="font-bold">Açaí 330ml</span>
+                        <span class="font-extrabold text-[#ea1d2c]">R$ 13,50</span>
+                    </div>
+                    <span class="text-[11px] text-gray-400 mt-1 uppercase">Incluso 2 Frutas e 1 Complemento.</span>
+                </div>
+
+                <div onclick="abrirModal('Açaí 500ml', 18.90, 3, 2, [], [])" class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex flex-col cursor-pointer">
+                    <div class="flex justify-between">
+                        <span class="font-bold">Açaí 500ml</span>
+                        <span class="font-extrabold text-[#ea1d2c]">R$ 18,90</span>
+                    </div>
+                    <span class="text-[11px] text-gray-400 mt-1 uppercase">Incluso 3 Frutas e 2 Complementos.</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="bebidas" class="scroll-mt-28">
+            <h3 class="font-extrabold text-gray-900 text-lg mb-4">🥤 Bebidas</h3>
+            <div class="bg-white p-4 rounded-2xl border-b-4 border-gray-100 flex justify-between items-center">
+                <div>
+                    <span class="font-bold block">Água Mineral 500ml</span>
+                    <span class="font-extrabold text-[#ea1d2c]">R$ 3,50</span>
+                </div>
+                <button onclick="addAgua()" class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-md active:scale-90 transition">+ Adicionar</button>
+            </div>
+        </section>
     </main>
 
-    <div id="modal-custom" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm">
-      <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[40px] max-h-[94%] overflow-y-auto slide-up">
-        <div class="sticky top-0 bg-white p-6 border-b flex justify-between items-center z-10">
-          <div><h3 id="m-title" class="font-black text-gray-800 text-lg uppercase italic"></h3><p id="m-price-base" class="text-purple-600 font-black text-base"></p></div>
-          <button onclick="closeCust()" class="bg-gray-100 p-2 rounded-full font-bold">✕</button>
-        </div>
-        <div class="p-6 space-y-6">
-            <div class="bg-yellow-50 border border-yellow-100 p-3 rounded-xl text-center">
-                <p class="text-[11px] font-bold text-yellow-700 italic uppercase">🍓 Extra Fruta: R$ 2,50 | 🍫 Extra Complemento: R$ 3,50</p>
-            </div>
-            <div>
-                <h4 class="font-black text-sm mb-2 italic">🍓 FRUTAS <span id="info-free-f" class="text-purple-600"></span></h4>
-                <div id="grid-frutas" class="grid grid-cols-3 gap-2"></div>
-            </div>
-            <div>
-                <h4 class="font-black text-sm mb-2 italic">🍫 COMPLEMENTOS <span id="info-free-c" class="text-purple-600"></span></h4>
-                <div id="grid-comp" class="grid grid-cols-3 gap-2"></div>
-            </div>
-            <textarea id="m-obs" class="w-full bg-gray-50 border border-gray-100 rounded-2xl p-4 text-sm outline-none" placeholder="Alguma observação?"></textarea>
-        </div>
-        <div class="p-6 border-t bg-white sticky bottom-0">
-          <button onclick="addToCart()" class="w-full btn-acai py-5 flex justify-between px-8 text-sm shadow-xl"><span>Confirmar</span><span id="m-total">R$ 0,00</span></button>
-        </div>
-      </div>
+    <div id="bag-bar" class="fixed bottom-0 left-0 right-0 p-4 bg-white border-t hidden z-50">
+        <button onclick="verSacola()" class="w-full bg-[#ea1d2c] text-white h-14 rounded-xl flex justify-between items-center px-6 font-bold">
+            <div class="flex items-center gap-2"><span id="bag-count" class="bg-black/20 px-2 rounded">0</span><span>Ver Sacola</span></div>
+            <span id="bag-total">R$ 0,00</span>
+        </button>
     </div>
 
-    <div id="modal-cart" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm">
-      <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[40px] max-h-[94%] overflow-y-auto p-6 pb-10">
-        <div class="flex justify-between items-center mb-8"><h2 class="text-xl font-black text-gray-800 uppercase italic">Meu Pedido</h2><button onclick="toggleCart()" class="font-bold text-gray-400">✕</button></div>
-        <div id="cart-list" class="space-y-3 mb-8"></div>
-        <div class="mb-8">
-          <h4 class="font-black text-sm text-gray-600 mb-4 italic underline text-center">Forma de Pagamento</h4>
-          <div class="grid grid-cols-3 gap-3">
-            <div onclick="setPay('Pix')" id="pay-Pix" class="payment-card">📱 Pix</div>
-            <div onclick="setPay('Cartão')" id="pay-Cartão" class="payment-card">💳 Cartão</div>
-            <div onclick="setPay('Dinheiro')" id="pay-Dinheiro" class="payment-card">💵 Dinheiro</div>
-          </div>
-          <div id="pix-area" class="hidden text-center mt-4 p-4 border-2 border-dashed border-purple-300 rounded-2xl">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=47992657218" class="mx-auto mb-2 rounded-xl">
-            <p class="text-xs font-black">Chave Pix: 47992657218</p>
-          </div>
-          <div id="money-area" class="hidden mt-4">
-            <input type="number" id="money-val" oninput="calcChange()" placeholder="Troco para quanto?" class="w-full p-4 border border-purple-200 rounded-2xl text-center font-black">
-            <p id="change-res" class="mt-2 text-center text-green-600 font-bold"></p>
-          </div>
+    <div id="modal-item" class="fixed inset-0 z-[60] bg-black/50 hidden">
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-[32px] max-h-[90vh] overflow-y-auto p-6">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 id="m-nome" class="text-xl font-extrabold text-purple-900 leading-tight"></h2>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Troque os itens abaixo</p>
+                </div>
+                <button onclick="fecharModal()" class="text-gray-300 text-2xl">✕</button>
+            </div>
+
+            <div class="space-y-6 mb-32">
+                <div class="bg-yellow-50 p-3 rounded-xl border border-yellow-100 text-[11px] font-bold text-yellow-700">
+                    💡 DICA: Você pode desmarcar o que vem no copo e escolher outro! Extras: Fruta +R$2,50 | Comp. +R$3,50
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-sm mb-4">Frutas (<span id="f-limit-text">0/0</span>)</h4>
+                    <div id="list-f" class="grid grid-cols-1 gap-2"></div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-4">Complementos (<span id="c-limit-text">0/0</span>)</h4>
+                    <div id="list-c" class="grid grid-cols-1 gap-2"></div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-2">Observação</h4>
+                    <textarea id="m-obs" class="w-full bg-gray-100 rounded-xl p-4 text-sm outline-none border-none" placeholder="Ex: Caprichar na Nutella..."></textarea>
+                </div>
+            </div>
+
+            <div class="fixed bottom-0 left-0 right-0 p-6 bg-white border-t flex gap-4">
+                <div class="flex items-center bg-gray-100 rounded-xl px-2">
+                    <button onclick="mudarQtd(-1)" class="w-10 h-10 text-xl font-bold">−</button>
+                    <span id="m-qty" class="w-8 text-center font-bold">1</span>
+                    <button onclick="mudarQtd(1)" class="w-10 h-10 text-xl font-bold">+</button>
+                </div>
+                <button onclick="addSacola()" class="flex-1 bg-[#ea1d2c] text-white rounded-xl font-bold flex justify-between items-center px-4">
+                    <span>Adicionar</span><span id="m-total">R$ 0,00</span>
+                </button>
+            </div>
         </div>
-        <div class="bg-purple-950 p-6 rounded-[32px] text-white mb-6 text-center">
-          <div class="font-black text-3xl" id="cart-total">R$ 0,00</div>
-        </div>
-        <button onclick="send()" class="w-full btn-acai py-6 uppercase font-black text-sm">🚀 Finalizar no WhatsApp</button>
-      </div>
     </div>
+
+    <div id="checkout" class="fixed inset-0 z-[70] bg-white hidden overflow-y-auto">
+        <div class="p-4 border-b flex items-center gap-4 bg-white sticky top-0">
+            <button onclick="verSacola()" class="text-[#ea1d2c] font-bold text-2xl">❮</button>
+            <h2 class="font-extrabold">Revisão do Pedido</h2>
+        </div>
+
+        <div class="p-6 pb-20">
+            <div id="lista-checkout" class="space-y-4 mb-8"></div>
+
+            <div class="mb-8">
+                <h4 class="font-bold text-sm mb-3">Endereço de Entrega</h4>
+                <input id="addr" type="text" placeholder="Rua, Número e Bairro" class="w-full p-4 bg-gray-50 rounded-xl outline-none border-2 border-transparent focus:border-red-500 font-bold">
+            </div>
+
+            <div class="mb-8">
+                <h4 class="font-bold text-sm mb-3">Forma de Pagamento</h4>
+                <div class="space-y-2">
+                    <div onclick="setPagamento('Pix')" class="payment-card p-4 rounded-xl flex items-center justify-between" id="pay-pix">
+                        <span class="font-bold">Pix</span>
+                    </div>
+                    <div onclick="setPagamento('Cartão')" class="payment-card p-4 rounded-xl" id="pay-card">
+                        <span class="font-bold">Cartão (Entregador leva a máquina)</span>
+                    </div>
+                    <div onclick="setPagamento('Dinheiro')" class="payment-card p-4 rounded-xl" id="pay-cash">
+                        <span class="font-bold">Dinheiro</span>
+                    </div>
+                </div>
+
+                <div id="campo-troco" class="hidden mt-4 p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+                    <h4 class="font-bold text-sm mb-2">Vai pagar com quanto?</h4>
+                    <input id="pag-valor" type="number" oninput="calcTroco()" placeholder="Ex: 50.00" class="w-full p-3 rounded-lg border-none font-bold text-lg">
+                    <p id="resultado-troco" class="mt-2 text-sm font-bold text-green-600"></p>
+                </div>
+
+                <div id="campo-pix" class="hidden mt-4 p-4 bg-purple-50 rounded-xl border border-purple-200 text-center">
+                    <p class="text-[10px] font-black uppercase text-purple-900 italic">Chave Pix Celular:</p>
+                    <p class="font-black text-xl text-purple-700">44988569863</p>
+                    <p class="text-[10px] text-purple-400 mt-1 font-bold">DIA DE AÇAÍ EXPRESS</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-900 p-6 rounded-[32px] space-y-3 font-bold text-white shadow-xl">
+                <div class="flex justify-between text-gray-400 text-sm"><span>Produtos</span><span id="sub-final">R$ 0,00</span></div>
+                <div class="flex justify-between text-green-400 text-sm"><span>Entrega</span><span>R$ 7,50</span></div>
+                <div class="flex justify-between text-2xl font-black pt-4 border-t border-gray-800"><span>Total</span><span id="total-final">R$ 0,00</span></div>
+            </div>
+
+            <button onclick="enviarPedido()" class="w-full bg-[#ea1d2c] text-white py-5 rounded-2xl font-black text-lg mt-10 shadow-lg shadow-red-200 uppercase tracking-widest active:scale-95 transition">Pedir agora no Zap</button>
+        </div>
+    </div>
+
   </div>
 
   <script>
-    let cart = []; let cur = null; let pay = ''; let changeTxt = ''; let drinkCount = 0;
-    const db = {
-      frutas: [{n:'Morango',e:'🍓'}, {n:'Banana',e:'🍌'}, {n:'Uva',e:'🍇'}, {n:'Manga',e:'🥭'}],
-      comp: [{n:'Leite em pó',e:'🥛'}, {n:'Nutella',e:'🍫'}, {n:'Oreo',e:'🍪'}, {n:'Kit Kat',e:'🍫'}, {n:'Fini',e:'🍬'}, {n:'Paçoca',e:'🍪'}, {n:'Bis',e:'🍫'}, {n:'Granola',e:'🥣'}]
+    let sacola = []; let cur = null; let nome = ''; let pag = ''; let totalGeral = 0;
+    const db = { 
+        f: ['Morango','Banana','Uva','Manga','Kiwi'], 
+        c: ['Nutella','Leite Pó','Granola','Paçoca','Oreo','M&Ms','Bis','Leite Condensado'] 
     };
 
-    function toggleCart() { document.getElementById('modal-cart').classList.toggle('hidden'); }
-    function closeCust() { document.getElementById('modal-custom').classList.add('hidden'); }
-
-    // Funções para Bebida +/-
-    function updateDrinkQuantity(val) {
-        drinkCount = Math.max(0, drinkCount + val);
-        document.getElementById('drink-qty').innerText = drinkCount;
-        syncDrinksWithCart();
+    function iniciarApp() {
+        nome = document.getElementById('client-name').value;
+        if(!nome) return alert("Por favor, insira seu nome!");
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
     }
 
-    function syncDrinksWithCart() {
-        // Remove todas as águas atuais e adiciona conforme o contador
-        cart = cart.filter(i => i.title !== 'Água Mineral');
-        for(let i=0; i<drinkCount; i++) {
-            cart.push({title: 'Água Mineral', total: 3.50, f:[], c:[], obs:''});
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView();
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('tab-active'));
+        event.target.classList.add('tab-active');
+    }
+
+    function abrirModal(n, p, fL, cL, fS=[], cS=[]) {
+        cur = { nome: n, preco: p, fL: fL, cL: cL, f: [...fS], c: [...cS], q: 1 };
+        document.getElementById('m-nome').innerText = n;
+        renderOps('list-f', db.f, 'f');
+        renderOps('list-c', db.c, 'c');
+        calcModal();
+        document.getElementById('modal-item').classList.remove('hidden');
+    }
+
+    function renderOps(id, list, type) {
+        document.getElementById(id).innerHTML = list.map(opt => {
+            const isSel = cur[type].includes(opt);
+            return `<div onclick="toggleOpt(this,'${type}','${opt}')" class="p-4 rounded-xl border-2 flex justify-between items-center ${isSel ? 'border-[#ea1d2c] bg-red-50' : 'border-gray-50 bg-gray-50'}">
+                <span class="text-sm font-bold text-gray-700">${opt}</span>
+                <div class="w-5 h-5 rounded-full border-2 ${isSel ? 'bg-[#ea1d2c] border-[#ea1d2c]' : 'border-gray-200'}"></div>
+            </div>`;
+        }).join('');
+    }
+
+    function toggleOpt(el, type, val) {
+        const i = cur[type].indexOf(val);
+        if(i > -1) cur[type].splice(i, 1); else cur[type].push(val);
+        renderOps(type === 'f' ? 'list-f' : 'list-c', db[type === 'f' ? 'f' : 'c'], type);
+        calcModal();
+    }
+
+    function calcModal() {
+        const exF = Math.max(0, cur.f.length - cur.fL) * 2.50;
+        const exC = Math.max(0, cur.c.length - cur.cL) * 3.50;
+        const total = (cur.preco + exF + exC) * cur.q;
+        document.getElementById('m-total').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
+        document.getElementById('m-qty').innerText = cur.q;
+        document.getElementById('f-limit-text').innerText = `${cur.f.length}/${cur.fL}`;
+        document.getElementById('c-limit-text').innerText = `${cur.c.length}/${cur.cL}`;
+    }
+
+    function mudarQtd(v) { cur.q = Math.max(1, cur.q + v); calcModal(); }
+    function fecharModal() { document.getElementById('modal-item').classList.add('hidden'); }
+
+    function addSacola() {
+        const exF = Math.max(0, cur.f.length - cur.fL) * 2.50;
+        const exC = Math.max(0, cur.c.length - cur.cL) * 3.50;
+        const total = (cur.preco + exF + exC) * cur.q;
+        sacola.push({...cur, total, obs: document.getElementById('m-obs').value});
+        updateBag(); fecharModal();
+    }
+
+    function addAgua() {
+        sacola.push({nome: 'Água Mineral 500ml', total: 3.50, q: 1, f: [], c: [], obs: ''});
+        updateBag();
+    }
+
+    function updateBag() {
+        const sub = sacola.reduce((acc, i) => acc + i.total, 0);
+        totalGeral = sub + 7.50;
+        document.getElementById('bag-count').innerText = sacola.length;
+        document.getElementById('bag-total').innerText = `R$ ${totalGeral.toFixed(2).replace('.', ',')}`;
+        document.getElementById('bag-bar').classList.toggle('hidden', sacola.length === 0);
+    }
+
+    function verSacola() {
+        document.getElementById('checkout').classList.toggle('hidden');
+        const sub = sacola.reduce((acc, i) => acc + i.total, 0);
+        document.getElementById('lista-checkout').innerHTML = sacola.map((i, idx) => `
+            <div class="flex justify-between items-center border-b pb-4">
+                <div>
+                    <h5 class="font-bold text-sm">${i.q}x ${i.nome}</h5>
+                    <p class="text-[10px] text-gray-400 font-bold">${[...i.f, ...i.c].join(', ')}</p>
+                    <p class="text-sm font-black text-[#ea1d2c] mt-1">R$ ${i.total.toFixed(2).replace('.',',')}</p>
+                </div>
+                <button onclick="remover(${idx})" class="text-gray-300 font-black text-xs border p-1 rounded">X</button>
+            </div>`).join('');
+        document.getElementById('sub-final').innerText = `R$ ${sub.toFixed(2).replace('.',',')}`;
+        document.getElementById('total-final').innerText = `R$ ${totalGeral.toFixed(2).replace('.',',')}`;
+        calcTroco();
+    }
+
+    function remover(idx) { 
+        sacola.splice(idx, 1); 
+        if(sacola.length === 0) document.getElementById('checkout').classList.add('hidden');
+        verSacola(); updateBag(); 
+    }
+
+    function setPagamento(t) {
+        pag = t;
+        document.getElementById('pay-pix').className = "payment-card p-4 rounded-xl " + (t==='Pix'?'selected':'');
+        document.getElementById('pay-card').className = "payment-card p-4 rounded-xl " + (t==='Cartão'?'selected':'');
+        document.getElementById('pay-cash').className = "payment-card p-4 rounded-xl " + (t==='Dinheiro'?'selected':'');
+        document.getElementById('campo-troco').classList.toggle('hidden', t !== 'Dinheiro');
+        document.getElementById('campo-pix').classList.toggle('hidden', t !== 'Pix');
+        calcTroco();
+    }
+
+    function calcTroco() {
+        const v = parseFloat(document.getElementById('pag-valor').value);
+        const res = document.getElementById('resultado-troco');
+        if(v > totalGeral) {
+            res.innerText = `Seu troco será: R$ ${(v - totalGeral).toFixed(2).replace('.',',')}`;
+        } else {
+            res.innerText = "";
         }
-        updateCart();
     }
 
-    function openCust(title, price, freeF, freeC, preF = [], preC = []) {
-      cur = { title, price, f: [...preF], c: [...preC], freeF, freeC };
-      document.getElementById('m-title').innerText = title;
-      document.getElementById('m-price-base').innerText = `R$ ${price.toFixed(2).replace('.', ',')}`;
-      document.getElementById('info-free-f').innerText = `(${freeF} grátis)`;
-      document.getElementById('info-free-c').innerText = `(${freeC} grátis)`;
-      renderGrid('grid-frutas', db.frutas, 'f');
-      renderGrid('grid-comp', db.comp, 'c');
-      updateTotal();
-      document.getElementById('modal-custom').classList.remove('hidden');
-    }
-
-    function renderGrid(id, list, type) {
-      document.getElementById(id).innerHTML = list.map(i => {
-        const isSelected = cur[type].includes(i.n) ? 'selected' : '';
-        return `<div onclick="selectChip(this,'${type}','${i.n}')" class="chip ${isSelected}"><span>${i.e}</span> ${i.n}</div>`
-      }).join('');
-    }
-
-    function selectChip(el, type, val) {
-      el.classList.toggle('selected');
-      const pos = cur[type].indexOf(val);
-      if(pos > -1) cur[type].splice(pos, 1); else cur[type].push(val);
-      updateTotal();
-    }
-
-    function updateTotal() {
-      const extraF = Math.max(0, cur.f.length - cur.freeF) * 2.50;
-      const extraC = Math.max(0, cur.c.length - cur.freeC) * 3.50;
-      const total = cur.price + extraF + extraC;
-      document.getElementById('m-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-    }
-
-    function addToCart() {
-      const totalStr = document.getElementById('m-total').innerText.replace('R$ ', '').replace(',', '.');
-      cart.push({...cur, total: parseFloat(totalStr), obs: document.getElementById('m-obs').value});
-      updateCart(); closeCust();
-    }
-
-    function updateCart() {
-      const sub = cart.reduce((acc, i) => acc + i.total, 0);
-      document.getElementById('cart-count').innerText = cart.length;
-      document.getElementById('cart-count').classList.toggle('hidden', cart.length === 0);
-      document.getElementById('cart-total').innerText = `R$ ${sub.toFixed(2).replace('.', ',')}`;
-      document.getElementById('cart-list').innerHTML = cart.map((i, idx) => `
-        <div class="bg-gray-50 p-4 rounded-3xl flex justify-between items-center border">
-          <div><p class="font-black text-sm uppercase">${i.title}</p><p class="text-[9px] text-purple-500 font-bold">${[...i.f, ...i.c].join(', ')}</p></div>
-          <div class="text-right"><p class="font-black text-sm">R$ ${i.total.toFixed(2).replace('.', ',')}</p><button onclick="remove(${idx})" class="text-red-500 text-[10px] underline">Remover</button></div>
-        </div>`).join('');
-    }
-
-    function remove(idx) { 
-        if(cart[idx].title === 'Água Mineral') {
-            drinkCount = Math.max(0, drinkCount - 1);
-            document.getElementById('drink-qty').innerText = drinkCount;
+    function enviarPedido() {
+        const addr = document.getElementById('addr').value;
+        const vPag = document.getElementById('pag-valor').value;
+        if(!addr || !pag) return alert("Preencha o Endereço e Pagamento!");
+        
+        let msg = `*PEDIDO DIA DE AÇAÍ*\n\n👤 *CLIENTE:* ${nome}\n📍 *ENDEREÇO:* ${addr}\n💳 *PAGAMENTO:* ${pag}\n`;
+        
+        if(pag === 'Dinheiro' && vPag) {
+            const troco = (parseFloat(vPag) - totalGeral);
+            msg += `💵 *PAGO COM:* R$ ${vPag}\n🪙 *TROCO:* R$ ${troco > 0 ? troco.toFixed(2) : '0,00'}\n`;
         }
-        cart.splice(idx, 1); 
-        updateCart(); 
-    }
-
-    function setPay(m) {
-      pay = m;
-      document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
-      document.getElementById(`pay-${m}`).classList.add('selected');
-      document.getElementById('pix-area').classList.toggle('hidden', m !== 'Pix');
-      document.getElementById('money-area').classList.toggle('hidden', m !== 'Dinheiro');
-    }
-
-    function calcChange() {
-      const total = cart.reduce((acc, i) => acc + i.total, 0);
-      const money = parseFloat(document.getElementById('money-val').value) || 0;
-      if(money > total) {
-        changeTxt = `Troco para R$ ${money.toFixed(2)}`;
-        document.getElementById('change-res').innerText = `Troco: R$ ${(money-total).toFixed(2)}`;
-      } else { changeTxt = "Sem troco"; document.getElementById('change-res').innerText = ""; }
-    }
-
-    function send() {
-      if(!pay || cart.length === 0) return alert('Verifique o pedido e o pagamento!');
-      let msg = `*NOVO PEDIDO - DIA DE AÇAÍ EXPRESS*\n\n💳 *Pagamento:* ${pay}\n${pay === 'Dinheiro' ? '💵 *Troco:* ' + changeTxt : ''}\n\n`;
-      cart.forEach((i, idx) => {
-        msg += `*${idx+1}. ${i.title}*\n`;
-        if(i.f.length + i.c.length > 0) msg += `➕ Itens: ${[...i.f, ...i.c].join(', ')}\n`;
-        if(i.obs) msg += `📝 Obs: ${i.obs}\n`;
-        msg += `💰 R$ ${i.total.toFixed(2).replace('.', ',')}\n\n`;
-      });
-      msg += `*TOTAL: ${document.getElementById('cart-total').innerText}*`;
-      window.open(`https://wa.me/5547997867225?text=${encodeURIComponent(msg)}`);
+        
+        msg += `\n*ITENS:*\n`;
+        sacola.forEach(i => {
+            msg += `• ${i.q}x ${i.nome} (R$ ${i.total.toFixed(2)})\n`;
+            if([...i.f, ...i.c].length > 0) msg += `  _Ingredientes: ${[...i.f, ...i.c].join(', ')}_\n`;
+            if(i.obs) msg += `  _Obs: ${i.obs}_\n`;
+        });
+        
+        msg += `\n🛵 *ENTREGA:* R$ 7,50\n*TOTAL: R$ ${totalGeral.toFixed(2)}*`;
+        window.open(`https://wa.me/5544988569863?text=${encodeURIComponent(msg)}`);
     }
   </script>
 </body>
